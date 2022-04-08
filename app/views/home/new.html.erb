@@ -1,0 +1,65 @@
+
+
+
+<% if current_user.has_role? :admin %>
+    <h1> Users </h1>
+
+    <% @user.each do |user| %>
+        Email: <%= user.email %>
+        </br>
+    <% end %>
+<% else %>
+    <h1> Posts </h1> 
+
+    <%= form_tag(home_path, :method => "get") do %>
+        <div style="height: 1.5rem;">
+        <%= label_tag 'search', 'Enter post title to search' %>
+            <%= search_field_tag :search %>
+        </div>
+        <%= submit_tag "Search for Post" %>
+    <% end %>
+
+    <% @posts.each do |post| %>
+        by : <%= User.find(post.user_id)&.email %>
+        <h2>No #: <%= post.id %> </h2>
+        </br>
+        Title: <%= post.title %>
+        </br>
+        Description: <%= post.description %>
+        </br>
+        <tr><%= link_to 'Edit', edit_post_path(post.id) %></tr>
+        <tr><%= button_to 'Delete', post_path(post.id), method: :delete %></tr>
+        <p>
+            <strong>Category:</strong>
+            <%= post.category %>
+        </p>
+
+        <!--To show tags-->
+        <p>
+        <strong>Tags:</strong>
+        <% post.tags.each do |tag| %>
+            <%= link_to tag.name, tag_path(tag) %>
+        <% end %>
+        </p>
+
+        <strong>Likes </strong> <strong><%= post.likes.count %></strong>
+ 
+            <% like = current_user.likes.find_by(post_id: post.id) %>
+            <% if like.nil? %>
+                <%= button_to "Like", like_path(post.id), method: "put" %>
+            <% else %>
+                <%= button_to "Unlike", unlike_path(post.id), method: "put" %>
+            <% end %>
+        </br>
+        <%= post.comments.count %> Comments Available </br>
+        <%= link_to 'Add Comment/See Comment', post_comments_path(post.id) %>
+        </br>
+        </br>
+        </br>
+        
+
+    <% end %>
+    <%= link_to 'New Post', new_post_path %>
+<% end %>
+
+<%= link_to 'logout', destroy_user_session_path, data: { "turbo-method": :delete } %>

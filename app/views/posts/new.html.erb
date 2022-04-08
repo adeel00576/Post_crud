@@ -1,0 +1,30 @@
+<h1>New Post</h1>
+
+<%= form_for(@post) do |post| %>
+  <div>
+    <%= post.label :title %><br>
+    <%= post.text_field :title %>
+  </div>
+
+  <div>
+    <%= post.label :description %><br>
+    <%= post.text_area :description %>
+  </div>
+
+  
+  <div>
+    <%= post.label :category %><br>
+    <%= post.select :category, Category.all.map { |c| [c.categoryType] } %>
+  </div>
+ 
+
+  <div>
+        
+  <%= post.collection_check_boxes :tag_ids, Tag.order(:name), :id, :name, include_hidden: false, include_blank: true, multiple: true %>
+
+  </div>
+
+  <div>
+    <%= post.submit %>
+  </div>
+<% end %>

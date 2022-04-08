@@ -1,0 +1,14 @@
+
+<%= simple_form_for [@post, @comments] do |f| %>
+  <div class="row">
+    <div class="form-group col-md-4">
+      <% if user_signed_in? %>
+        <%= f.label :Comment %><br>
+        <%= f.text_area :content, class: "form-control" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="actions">
+    <%= f.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

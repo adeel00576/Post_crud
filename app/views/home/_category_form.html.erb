@@ -1,0 +1,10 @@
+<%= simple_form_for @post do |post| %>
+    <div>
+      <%= post.label :description %><br>
+      <%= post.text_area :description %>
+    </div>
+  
+    <div>
+      <%= post.submit %>
+    </div>
+  <% end %>

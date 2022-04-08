@@ -1,0 +1,23 @@
+<p>
+  
+    <% @comments.each do |comment| %>
+      <ul>
+        <td>
+          <li>
+            <tr><%= comment.content %></tr></br>
+            <% if user_signed_in? %>
+              <% if can? :update, comment %>
+                <tr><%= link_to 'Edit', edit_post_comment_path(@post.id, comment.id), class: "btn  btn-warning btn-sm" %></tr>
+              <% end %>
+              <% if can? :destroy, comment %>
+                <tr>
+                <%= button_to "Delete", post_comment_path(@post.id, comment.id), method: :delete %></tr>
+              <% end %>
+            <% end %>
+            by : <%= User.find(comment.user_id)&.email %>
+          </li>
+        </td>
+      </ul>
+    <% end %>
+  
+</p>
