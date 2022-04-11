@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :categories
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'user/registrations', sessions: 'user/sessions', passwords: 'user/passwords'}
 
   devise_scope :user do
     authenticated :user do
@@ -28,5 +28,11 @@ Rails.application.routes.draw do
   put '/post/:id/unlike', to: 'posts#unlike', as: 'unlike'
   get '/posts/:id/comments', to: 'comments#new'
   get '/search', to: 'home#new' 
+
+  namespace :api do
+    namespace :v1 do
+      resources :microposts, only: [:index, :show, :create, :destroy]
+    end
+  end
 
 end

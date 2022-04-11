@@ -8,8 +8,15 @@ Bundler.require(*Rails.groups)
 
 module NewApp
   class Application < Rails::Application
+
+
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+    config.middleware.insert_after(ActionDispatch::Cookies, ActionDispatch::Session::CookieStore)
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
+
+    config.middleware.use ActionDispatch::Flash
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -18,5 +25,6 @@ module NewApp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.api_only = false
   end
 end

@@ -4,6 +4,7 @@ class PostsController < ApplicationController
     def new
         @post = Post.new
         @category = Category.all
+        render json { render json: {all_data: {post: @post, category: @category}}}
     end
 
     def create
@@ -14,11 +15,13 @@ class PostsController < ApplicationController
         else
           render :new
         end
+        render json: @post
     end
 
     def edit
       @post = Post.find(params[:id])
       @tags = @post.tags
+      render json { render json: {all_data: {post: @post, tags: @tags}}}
     end
 
     def update
@@ -28,26 +31,33 @@ class PostsController < ApplicationController
       else
         render :edit
       end
+      render json: @post
     end
 
     def destroy
       @post = Post.find(params[:id])
       @post.destroy
       redirect_to home_path, notice: 'Product was successfully deleted.'
+      render json: @post
     end
 
     def show
-      @post = Post.all
+      @post = Post.find(params[:id])
+      puts @post.title
+      render json: @post
     end
 
     def index
+      puts "index"
     end
 
     def like
       post = Post.find(params[:id])
       like = post.likes.create(user_id: current_user.id)
+      puts like
       like.save
       redirect_to home_path(post), notice: 'You liked the Post.'
+      render json { render json: {all_data: {post: post, like: like}}}
     end
   
     def unlike

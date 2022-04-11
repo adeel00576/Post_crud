@@ -15,6 +15,7 @@ class User::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
+    puts "testing testing testing"
     byebug
     super
   end
