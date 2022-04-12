@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
     
     def new
         @post = Post.new
@@ -8,14 +8,15 @@ class PostsController < ApplicationController
     end
 
     def create
-    
+      
         @post = current_user.posts.new(post_params)
         if @post.save
-          redirect_to home_path, notice: 'Product was successfully created.'
+          # redirect_to home_path, notice: 'Product was successfully created.'
+          render json: @post
         else
           render :new
         end
-        render json: @post
+        
     end
 
     def edit

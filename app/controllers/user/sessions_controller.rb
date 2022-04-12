@@ -15,9 +15,13 @@ class User::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
-    puts "testing testing testing"
-    byebug
-    super
+    signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+    if signed_out === true
+      puts "testing testing logout"
+      render :json => {status: 200}
+    else
+      render :json => {status: 404}
+    end
   end
 
   # protected
