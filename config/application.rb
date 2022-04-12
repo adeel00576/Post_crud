@@ -26,5 +26,15 @@ module NewApp
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.api_only = false
+
+    # config.middleware.use Rack::Cors do
+    #   allow do
+    #     origins '*'
+    #     resource '*',
+    #              headers: :any,
+    #              expose: %w[access-token expired token-type uid client],
+    #              methods: %i[get post options delete put]
+    #   end
+    # end
   end
 end

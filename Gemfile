@@ -99,3 +99,5 @@ end
 
 gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git', :require => 'bcrypt'
 
+gem 'rack-cors'
+

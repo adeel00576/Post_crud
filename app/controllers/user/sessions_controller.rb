@@ -9,9 +9,13 @@ class User::SessionsController < Devise::SessionsController
   end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    
+    # if User.find_by_email(params[:email]).try(:valid_password?, params[:password])
+
+    # end
+    super
+  end
 
   # DELETE /resource/sign_out
   def destroy
