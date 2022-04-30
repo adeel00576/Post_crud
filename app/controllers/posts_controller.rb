@@ -1,5 +1,18 @@
 class PostsController < ApplicationController
   # before_action :authenticate_user!
+
+    def index
+      if user_signed_in?
+        puts "index"
+        @post = current_user.posts
+        render json: @post
+      else
+        puts "index"
+        @post = Post.all
+        render json: @post.to_json(include: :likes)
+      end
+
+    end
     
     def new
         @post = Post.new
@@ -47,12 +60,9 @@ class PostsController < ApplicationController
       render json: @post
     end
 
-    def index
-      puts "index"
-    end
-
     def like
       post = Post.find(params[:id])
+      byebug
       like = post.likes.create(user_id: current_user.id)
       puts like
       like.save
@@ -63,6 +73,11 @@ class PostsController < ApplicationController
     def unlike
       current_user.likes.find_by(post_id: params[:id])&.destroy
       redirect_to home_path(@post), notice: 'You unliked the Post.'
+    end
+    def like_count
+      post = Post.find(params[:id])
+      @count = post.likes.count
+      render json: @count
     end
 
     private

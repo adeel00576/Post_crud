@@ -310,4 +310,9 @@ Devise.setup do |config|
   # config.sign_in_after_change_password = true
   config.navigational_formats = ['*/*', :html, :turbo_stream]
 
+
+  config.jwt do |jwt|
+    jwt.secret = ENV['SECRET_JWT']
+  end
+
 end

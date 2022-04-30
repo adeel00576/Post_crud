@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users, controllers: { registrations: 'user/registrations', sessions: 'user/sessions', passwords: 'user/passwords'}
+  get '/member-data', to: 'members#show'
 
   devise_scope :user do
     authenticated :user do
@@ -28,6 +29,7 @@ Rails.application.routes.draw do
   put '/post/:id/unlike', to: 'posts#unlike', as: 'unlike'
   get '/posts/:id/comments', to: 'comments#new'
   get '/search', to: 'home#new' 
+  get '/post/:id/like_count', to: 'posts#like_count'
 
   namespace :api do
     namespace :v1 do
